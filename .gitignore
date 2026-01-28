@@ -1,0 +1,109 @@
+##-------------------------------------------------------------------------------
+## .NET / ASP.NET Core
+##-------------------------------------------------------------------------------
+
+# Build results
+bin/
+obj/
+out/
+artifacts/
+
+# User-specific files
+*.user
+*.rsuser
+*.suo
+*.userosscache
+*.sln.docstates
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Backup & logs
+*.bak
+*.log
+
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+# ASP.NET sensitive files
+appsettings.Development.json
+
+# Global.json SDK override backups
+global.json.backup
+
+
+##-------------------------------------------------------------------------------
+## ASPIRE-SPECIFIC
+##-------------------------------------------------------------------------------
+
+# Aspire's local orchestration state
+**/AppHost/logs/
+**/AppHost/.userSecrets/
+**/AppHost/.aspire/
+
+# Aspire Dashboard cache
+**/.aspire/
+
+# Aspire environment variable drops
+.env.local
+*.env
+
+# Aspire launch artifacts
+apphost.run.json
+
+
+##-------------------------------------------------------------------------------
+## VISUAL STUDIO
+##-------------------------------------------------------------------------------
+
+.vs/
+
+# Visual Studio cache
+.vscode/
+_ReSharper*/
+*.DotSettings.user
+
+# Publish profiles (machine-specific)
+Properties/PublishProfiles/*
+
+
+##-------------------------------------------------------------------------------
+## NODE / JAVASCRIPT (Next.js, React, etc.)
+##-------------------------------------------------------------------------------
+
+# Dependencies
+node_modules/
+
+# Next.js build output
+.next/
+.next/
+.next/cache/
+.next/static/
+
+# Standalone builds (if using `output: standalone`)
+**/standalone/
+
+# Static export folder
+out/
+
+# Yarn / npm logs
+yarn-error.log
+npm-debug.log
+pnpm-debug.log
+
+# Environment files
+.env
+.env.development
+.env.production
+.env.local
+
+
+##-------------------------------------------------------------------------------
+## MISC / EDITORS
+##-------------------------------------------------------------------------------
+
+# JetBrains Rider
+.idea/
+
+# VS Code settings
