@@ -80,6 +80,7 @@ node_modules/
 .next/
 .next/cache/
 .next/static/
+package-lock.json
 
 # Standalone builds (if using `output: standalone`)
 **/standalone/
