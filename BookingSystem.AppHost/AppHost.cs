@@ -7,6 +7,7 @@ builder.AddProject<Projects.BookingSystem_API>("bookingsystem-api", launchProfil
         {
             url.Url = "/scalar";
             url.DisplayText = "API Docs (Scalar)";
-        });
+        })
+       .WithEnvironment("ConnectionStrings__mongo", "mongodb://localhost:27017");
 
 builder.Build().Run();

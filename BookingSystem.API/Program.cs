@@ -1,4 +1,6 @@
 using Scalar.AspNetCore;
+using MongoDB.Driver;
+using BookingSystem.API.Services;
 
 namespace BookingSystem.API
 {
@@ -13,6 +15,18 @@ namespace BookingSystem.API
             builder.Services.AddControllers();
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
+
+            var mongoConnectionString = builder.Configuration.GetConnectionString("mongo");
+
+            builder.Services.AddSingleton<IMongoClient>(_ => new MongoClient(mongoConnectionString));
+
+            builder.Services.AddSingleton(sp =>
+            {
+                var client = sp.GetRequiredService<IMongoClient>();
+                return client.GetDatabase("BookingSystem");
+            });
+
+            builder.Services.AddSingleton<BookService>();
 
             var app = builder.Build();
 
