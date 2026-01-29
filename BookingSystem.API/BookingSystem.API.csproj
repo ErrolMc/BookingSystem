@@ -7,9 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.2" />
     <PackageReference Include="MongoDB.Driver" Version="3.6.0" />
-    <PackageReference Include="Scalar.AspNetCore" Version="2.12.20" />
+    <PackageReference Include="Scalar.AspNetCore" Version="2.12.22" />
   </ItemGroup>
 
 </Project>
