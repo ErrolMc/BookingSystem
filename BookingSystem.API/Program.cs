@@ -8,13 +8,23 @@ namespace BookingSystem.API
     {
         public static void Main(string[] args)
         {
-            var builder = WebApplication.CreateBuilder(args);
+            WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
             
             // Add services to the container.
 
             builder.Services.AddControllers();
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
+
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowNextJs", policy =>
+                {
+                    policy.WithOrigins(GetAllowedOrigins(builder))
+                          .AllowAnyHeader()
+                          .AllowAnyMethod();
+                });
+            });
 
             var mongoConnectionString = builder.Configuration.GetConnectionString("mongo");
 
@@ -39,12 +49,38 @@ namespace BookingSystem.API
 
             app.UseHttpsRedirection();
 
-            app.UseAuthorization();
+            app.UseCors("AllowNextJs");
 
+            app.UseAuthorization();
 
             app.MapControllers();
 
             app.Run();
+        }
+
+        static string[] GetAllowedOrigins(WebApplicationBuilder builder)
+        {
+            // Add CORS support for Next.js frontend
+            // Get frontend URLs from Aspire service reference
+            var allowedOrigins = new List<string>();
+
+            string frontendHttpUrl = builder.Configuration["services:frontend:http:0"];
+            string frontendHttpsUrl = builder.Configuration["services:frontend:https:0"];
+
+            if (!string.IsNullOrEmpty(frontendHttpUrl))
+                allowedOrigins.Add(frontendHttpUrl);
+
+            if (!string.IsNullOrEmpty(frontendHttpsUrl))
+                allowedOrigins.Add(frontendHttpsUrl);
+
+            // Fallback for standalone development
+            if (allowedOrigins.Count == 0)
+            {
+                allowedOrigins.Add("http://localhost:3000");
+                allowedOrigins.Add("https://localhost:3000");
+            }
+
+            return allowedOrigins.ToArray();
         }
     }
 }
