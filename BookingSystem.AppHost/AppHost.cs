@@ -2,14 +2,8 @@ var builder = DistributedApplication.CreateBuilder(args);
 
 var mongoBuilder = builder.AddMongoDB("mongo")
     .WithExternalHttpEndpoints()
-    .WithDataVolume("mongo-data");
-
-// Only use custom registry if configured in user secrets (e.g. on corporate network)
-var imageRegistry = builder.Configuration["DockerImageRegistry"];
-if (!string.IsNullOrEmpty(imageRegistry))
-{
-    mongoBuilder = mongoBuilder.WithImageRegistry(imageRegistry);
-}
+    .WithDataVolume("mongo-data")
+    .WithImageRegistry("docker-hub.artifactory.srv.westpac.com.au");
 
 var frontEnd = builder.AddNpmApp("frontend", "../bookingsystem.web", "dev")
     .WithHttpEndpoint(port: 3000, env: "PORT")
