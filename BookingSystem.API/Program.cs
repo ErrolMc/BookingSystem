@@ -1,6 +1,6 @@
 using Scalar.AspNetCore;
 using MongoDB.Driver;
-using BookingSystem.API.Services;
+using BookingSystem.API.Repositories;
 
 namespace BookingSystem.API
 {
@@ -36,7 +36,10 @@ namespace BookingSystem.API
                 return client.GetDatabase("BookingSystem");
             });
 
-            builder.Services.AddSingleton<BookService>();
+            // Register repositories
+            builder.Services.AddSingleton<PatientRepository>();
+            builder.Services.AddSingleton<PractitionerRepository>();
+            builder.Services.AddSingleton<AdministratorRepository>();
 
             var app = builder.Build();
 
@@ -64,8 +67,8 @@ namespace BookingSystem.API
             // Get frontend URLs from Aspire service reference
             var allowedOrigins = new List<string>();
 
-            string frontendHttpUrl = builder.Configuration["services:frontend:http:0"];
-            string frontendHttpsUrl = builder.Configuration["services:frontend:https:0"];
+            string? frontendHttpUrl = builder.Configuration["services:frontend:http:0"];
+            string? frontendHttpsUrl = builder.Configuration["services:frontend:https:0"];
 
             if (!string.IsNullOrEmpty(frontendHttpUrl))
                 allowedOrigins.Add(frontendHttpUrl);

@@ -7,7 +7,7 @@ namespace BookingSystem.API.Models
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public string Id { get; set; }
+        public string? Id { get; set; }
 
         [BsonElement("username")]
         public required string Username { get; set; }
@@ -19,6 +19,6 @@ namespace BookingSystem.API.Models
         public required string PasswordHash { get; set; }
 
         [BsonElement("practices")]
-        public List<string> Practices { get; set; }
+        public List<string> Practices { get; set; } = new List<string>();
     }
 }

@@ -8,7 +8,7 @@ namespace BookingSystem.API.Models
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public string Id { get; set; }
+        public string? Id { get; set; }
 
         [BsonElement("username")]
         public required string Username { get; set; }
@@ -29,21 +29,21 @@ namespace BookingSystem.API.Models
         public required string PasswordHash { get; set; }
 
         [BsonElement("specialization")]
-        public string Specialization { get; set; }
+        public string Specialization { get; set; } = string.Empty;
 
         [BsonElement("practice")]
-        public string Practice { get; set; }
+        public string Practice { get; set; } = string.Empty;
 
         [BsonElement("qualifications")]
-        public List<PractitionerQualification> Qualifications { get; set; }
+        public List<PractitionerQualification> Qualifications { get; set; } = new List<PractitionerQualification>();
 
         [BsonElement("yearsOfExperience")]
-        public int YearsOfExperience { get; set; }
+        public int YearsOfExperience { get; set; } = 0;
 
         [BsonElement("bio")]
-        public string Bio { get; set; }
+        public string Bio { get; set; } = string.Empty;
 
         [BsonElement("availability")]
-        public Availability Availability { get; set; }
+        public Availability Availability { get; set; } = new Availability();
     }
 }

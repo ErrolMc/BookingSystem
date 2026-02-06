@@ -25,6 +25,6 @@ namespace BookingSystem.API.Models
         public required int DurationInMinutes { get; set; }
 
         [BsonElement("reasonForVisit")]
-        public string ReasonForVisit { get; set; }
+        public string ReasonForVisit { get; set; } = string.Empty;
     }
 }

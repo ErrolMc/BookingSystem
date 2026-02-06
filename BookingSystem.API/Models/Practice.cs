@@ -8,7 +8,7 @@ namespace BookingSystem.API.Models
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public string Id { get; set; }
+        public required string Id { get; set; }
 
         [BsonElement("name")]
         public required string Name { get; set; }
@@ -26,18 +26,18 @@ namespace BookingSystem.API.Models
         public required string Email { get; set; }
 
         [BsonElement("website")]
-        public string Website { get; set; }
+        public string Website { get; set; } = string.Empty;
 
         [BsonElement("openingHours")]
-        public Availability OpeningHours { get; set; } // dont need the practice field here in the TimeSlots
+        public Availability OpeningHours { get; set; } = new Availability();
 
         [BsonElement("practitioners")]
-        public List<string> Practitioners { get; set; }
+        public List<string> Practitioners { get; set; } = new List<string>();
 
         [BsonElement("servicesOffered")]
-        public List<string> ServicesOffered { get; set; }
+        public List<string> ServicesOffered { get; set; } = new List<string>();
 
         [BsonElement("description")]
-        public string Description { get; set; }
+        public string Description { get; set; } = string.Empty;
     }
 }
