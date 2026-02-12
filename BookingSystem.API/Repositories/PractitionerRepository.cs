@@ -1,4 +1,5 @@
 using BookingSystem.API.Models;
+using BookingSystem.API.Models.Subclasses;
 using MongoDB.Driver;
 
 namespace BookingSystem.API.Repositories
@@ -27,6 +28,9 @@ namespace BookingSystem.API.Repositories
         public async Task<bool> ExistsByUsernameAsync(string username) =>
             await _practitionersCollection.Find(x => x.Username == username).AnyAsync();
 
+        public async Task<bool> ExistsByIdAsync(string id) =>
+            await _practitionersCollection.Find(x => x.Id == id).AnyAsync();
+
         public async Task CreateAsync(Practitioner practitioner) =>
             await _practitionersCollection.InsertOneAsync(practitioner);
 
@@ -35,5 +39,33 @@ namespace BookingSystem.API.Repositories
 
         public async Task DeleteAsync(string id) =>
             await _practitionersCollection.DeleteOneAsync(x => x.Id == id);
+
+        public async Task UpdatePractitionerInfoByIdAsync(
+            string id,
+            List<PractitionerQualification>? qualifications,
+            int? yearsOfExperience,
+            string? bio,
+            Availability? availability)
+        {
+            var updates = new List<UpdateDefinition<Practitioner>>();
+
+            if (qualifications != null)
+                updates.Add(Builders<Practitioner>.Update.Set(x => x.Qualifications, qualifications));
+
+            if (yearsOfExperience.HasValue)
+                updates.Add(Builders<Practitioner>.Update.Set(x => x.YearsOfExperience, yearsOfExperience.Value));
+
+            if (bio != null)
+                updates.Add(Builders<Practitioner>.Update.Set(x => x.Bio, bio));
+
+            if (availability != null)
+                updates.Add(Builders<Practitioner>.Update.Set(x => x.Availability, availability));
+
+            if (updates.Count > 0)
+            {
+                var combinedUpdate = Builders<Practitioner>.Update.Combine(updates);
+                await _practitionersCollection.UpdateOneAsync(x => x.Id == id, combinedUpdate);
+            }
+        }
     }
 }

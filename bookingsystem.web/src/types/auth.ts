@@ -32,3 +32,15 @@ export interface PractitionerRegisterRequest {
 }
 
 export type RegisterRequest = AdminRegisterRequest | PatientRegisterRequest | PractitionerRegisterRequest;
+
+export interface LoginResponse {
+  success: boolean;
+  message: string;
+  userId?: string | null;
+}
+
+export interface RegisterResponse {
+  success: boolean;
+  message: string;
+  userId?: string | null;
+}

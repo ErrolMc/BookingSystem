@@ -19,6 +19,8 @@ namespace BookingSystem.API.Controllers.Auth
         }
 
         [HttpPost("login")]
+        [ProducesResponseType<LoginResponse>(StatusCodes.Status200OK)]
+        [ProducesResponseType<LoginResponse>(StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> Login([FromBody] LoginRequest request)
         {
             var username = request.Username.ToLowerInvariant();
@@ -29,10 +31,12 @@ namespace BookingSystem.API.Controllers.Auth
             if (!PasswordHelper.ValidatePassword(request.Password, practitioner.PasswordHash))
                 return Unauthorized(new LoginResponse { Success = false, Message = "Invalid username or password" });
 
-            return Ok(new LoginResponse { Success = true, Message = "Login successful" });
+            return Ok(new LoginResponse { Success = true, Message = "Login successful", UserId = practitioner.Id });
         }
 
         [HttpPost("register")]
+        [ProducesResponseType<RegisterResponse>(StatusCodes.Status200OK)]
+        [ProducesResponseType<RegisterResponse>(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Register([FromBody] PractitionerRegisterRequest request)
         {
             var username = request.Username.ToLowerInvariant();
@@ -62,7 +66,7 @@ namespace BookingSystem.API.Controllers.Auth
 
             await _practitionerRepository.CreateAsync(practitioner);
             
-            return Ok(new RegisterResponse { Success = true, Message = "Registration successful" });
+            return Ok(new RegisterResponse { Success = true, Message = "Registration successful", UserId = practitioner.Id });
         }
     }
 }

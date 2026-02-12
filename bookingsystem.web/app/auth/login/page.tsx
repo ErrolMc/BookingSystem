@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { UserRole, LoginRequest } from "@/src/types/auth";
+import { UserRole, LoginRequest, LoginResponse } from "@/src/types/auth";
 import { authApi } from "@/src/lib/authApi";
 
 const roleLabels: Record<UserRole, string> = {
@@ -36,11 +36,23 @@ export default function LoginPage() {
       const response = await authApi.login(selectedRole, formData);
 
       if (response.ok) {
-        // Redirect to dashboard after successful login
-        router.push("/dashboard");
+        const data: LoginResponse = await response.json();
+        if (data.success && data.userId) {
+          // Store user info
+          localStorage.setItem("user_id", data.userId);
+          localStorage.setItem("user_role", selectedRole);
+          // Redirect to dashboard after successful login
+          router.push("/dashboard");
+        } else {
+          setError(
+            data.message || "Login failed. Please check your credentials."
+          );
+        }
       } else {
-        const errorData = await response.text();
-        setError(errorData || "Login failed. Please check your credentials.");
+        const data: LoginResponse = await response.json();
+        setError(
+          data.message || "Login failed. Please check your credentials."
+        );
       }
     } catch (err) {
       setError("An error occurred. Please try again.");

@@ -89,7 +89,10 @@ export default function DashboardPage() {
               </p>
             </div>
 
-            <div className="bg-purple-50 dark:bg-purple-900/20 rounded-xl p-6 border border-purple-200 dark:border-purple-800">
+            <div
+              onClick={() => router.push("/practitioner/info")}
+              className="bg-purple-50 dark:bg-purple-900/20 rounded-xl p-6 border border-purple-200 dark:border-purple-800 cursor-pointer hover:shadow-lg transition-all duration-200"
+            >
               <div className="w-12 h-12 bg-purple-600 rounded-lg flex items-center justify-center mb-4">
                 <svg
                   className="w-6 h-6 text-white"
@@ -106,10 +109,10 @@ export default function DashboardPage() {
                 </svg>
               </div>
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-                Profile
+                Practitioner Profile
               </h3>
               <p className="text-gray-600 dark:text-gray-400 text-sm">
-                Update your personal information and settings.
+                Update your qualifications, bio, and availability.
               </p>
             </div>
           </div>
